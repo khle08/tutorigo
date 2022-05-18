@@ -20,4 +20,13 @@ func main() {
 
     basics.Variable()
     basics.Constant()
+    basics.IntData()
+    basics.OtherData()
+    basics.DataType()
+    basics.Pointer()
+
+    basics.IfElse()
+    basics.SwitchCase1()
+    basics.SwitchCase2()
+    basics.ForLoop()
 }
