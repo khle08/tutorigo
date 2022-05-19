@@ -57,4 +57,5 @@ func main() {
     funcs.Struct()
 
     funcs.Method()
+    funcs.Interface()
 }
