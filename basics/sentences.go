@@ -87,3 +87,28 @@ func ForLoop() {
 }
 
 
+func Label2Goto() {
+	fmt.Println("\n2-4. label and goto")
+
+	outside:
+	for i:=0; i<10; i++ {
+		for j:=0; j<10; j++ {
+			fmt.Print("+ ")
+			if i == 6 && j == 3 {
+				// call the label and stop the corresponding loop
+				break outside
+			}
+		}
+		fmt.Println()
+	}
+	fmt.Println()
+
+	fmt.Println("label 1")
+	goto lab  // skip the following lines and jump directly to the label
+	fmt.Println("label 2")
+
+	lab:  // make a name here
+	fmt.Println("label 3")
+	fmt.Println("label 4")
+}
+

@@ -2,9 +2,22 @@ package main
 
 import (
     "fmt"
+    "tutorigo/funcs"
     "tutorigo/basics"
     "tutorigo/packageName"
 )
+
+
+var ZZ = funcs.Z
+
+func init() {
+    funcs.F("main.go --> 1st init")
+}
+
+func init() {
+    funcs.F("main.go --> 2nd init")
+    fmt.Scanln()
+}
 
 
 func main() {
@@ -29,4 +42,19 @@ func main() {
     basics.SwitchCase1()
     basics.SwitchCase2()
     basics.ForLoop()
+    basics.Label2Goto()
+
+    fmt.Println(funcs.Add(1, 2))
+    fmt.Println(funcs.SumDif(3, 2))
+    fmt.Println(funcs.SumDif2(3, 2))
+    funcs.Hidden()
+    funcs.Defer()
+
+    funcs.Array()
+    funcs.Slice()
+    funcs.Map()
+    funcs.SelfDefineType()
+    funcs.Struct()
+
+    funcs.Method()
 }
