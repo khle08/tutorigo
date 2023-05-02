@@ -1,11 +1,22 @@
+////////////////////////////////////////////////////////////////////////
+
+// Date: 2022.5.30
+// Author: Kuo Chun Lin
+// ref : https://www.youtube.com/playlist?list=PLBjZhzRvV2ChPTPNDx_apHdKa9Ha7LVpN
+
+////////////////////////////////////////////////////////////////////////
+
 package main
 
 import (
     "fmt"
     "tutorigo/funcs"
+    "tutorigo/tools"
     "tutorigo/basics"
     "tutorigo/packageName"
 )
+
+////////////////////////////////////////////////////////////////////////
 
 
 var ZZ = funcs.Z
@@ -20,6 +31,9 @@ func init() {
 }
 
 
+////////////////////////////////////////////////////////////////////////
+
+
 func main() {
     // // In order to call the function at same folder as "main.go", ...
     // // ... run the following CMD line:
@@ -31,31 +45,38 @@ func main() {
     packageName.Print()
     fmt.Printf("note version: %v\n", basics.VERSION)
 
-    basics.Variable()
-    basics.Constant()
-    basics.IntData()
-    basics.OtherData()
-    basics.DataType()
-    basics.Pointer()
+    // basics.Variable()
+    // basics.Constant()
+    // basics.IntData()
+    // basics.OtherData()
+    // basics.DataType()
+    // basics.Pointer()
 
-    basics.IfElse()
-    basics.SwitchCase1()
-    basics.SwitchCase2()
-    basics.ForLoop()
-    basics.Label2Goto()
+    // basics.IfElse()
+    // basics.SwitchCase1()
+    // basics.SwitchCase2()
+    // basics.ForLoop()
+    // basics.Label2Goto()
 
-    fmt.Println(funcs.Add(1, 2))
-    fmt.Println(funcs.SumDif(3, 2))
-    fmt.Println(funcs.SumDif2(3, 2))
-    funcs.Hidden()
-    funcs.Defer()
+    // fmt.Println(funcs.Add(1, 2))
+    // fmt.Println(funcs.SumDif(3, 2))
+    // fmt.Println(funcs.SumDif2(3, 2))
+    // funcs.Hidden()
+    // funcs.Defer()
+    // funcs.ErrorHandler()  // needs some knowledge of "Method"
 
-    funcs.Array()
-    funcs.Slice()
-    funcs.Map()
-    funcs.SelfDefineType()
-    funcs.Struct()
+    // funcs.Array()
+    // funcs.Slice()
+    // funcs.Map()
+    // funcs.SelfDefineType()
+    // funcs.Struct()
 
-    funcs.Method()
-    funcs.Interface()
+    // funcs.Method()
+    // funcs.Interface()
+    // funcs.GoAsync()
+    // // funcs.Goroutine()
+    // funcs.Channel()
+    
+    tools.ReadFile()
+    tools.ParamTest()
 }

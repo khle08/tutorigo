@@ -1,0 +1,22 @@
+
+# [Hyperparameters (defaule)]
+
+# Check if parameters are going to be modified by program (true / false)
+CONFIG_UPDATE : false
+# Decide if the Param class accepts new added value
+CONFIG_FIX_PARAM_NUM : false
+
+
+# [Additional parameters (customized)]
+TOPIC : null
+MODE : 1
+FIX_SEND : 0
+
+
+BATCH : 1
+# MODEL_NAME: "abc.engine"
+MODEL_NAME : abc.engine
+
+
+IS_SHOW : 1
+

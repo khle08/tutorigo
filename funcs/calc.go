@@ -1,8 +1,12 @@
+////////////////////////////////////////////////////////////////////////
+
 package funcs
 
 import "fmt"
+import "errors"
 import _ "reflect"    // not use but also no error
 
+////////////////////////////////////////////////////////////////////////
 
 var Z = 0
 var F = func(s string) int {
@@ -80,3 +84,52 @@ func Defer() {
 	fmt.Println(3 / n)  // this will cause "error" and the error will be
 	// deposited by the hidden function with "recover()" func.
 }
+
+
+func errorDemo(num int) (int, error) {
+	// Default error type provided by golang.
+	if num < 0 {
+		return -1, errors.New("Negative number")
+	}
+
+	return 2 * num, nil
+}
+
+type ErrStruct struct {
+	// Self-defined error type
+	arg int
+	msg string
+}
+
+func (e *ErrStruct) Error() string {
+	// As long as "Error" method defined in a struct, it works the
+	// same way as default error handler.
+	return fmt.Sprintf("%d -> %s", e.arg, e.msg)
+	// This is useful when recording the error log info in the backend.
+}
+
+func errorDemo2(num int) (int, error) {
+	if num < 0 {
+		return -1, &ErrStruct{num, "can not be negative value"}
+	}
+
+	return 2 * num, nil
+}
+
+func ErrorHandler() {
+	fmt.Println("\n3-6. Error handling")
+
+	// default
+	res, err := errorDemo(10)
+	fmt.Println(res, err)
+	res, err = errorDemo(-10)
+	fmt.Println(res, err)
+
+	// self-defined
+	res, err = errorDemo2(10)
+	fmt.Println(res, err)
+	res, err = errorDemo2(-10)
+	fmt.Println(res, err)
+}
+
+
