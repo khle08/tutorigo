@@ -77,6 +77,6 @@ func main() {
     // // funcs.Goroutine()
     // funcs.Channel()
     
-    tools.ReadFile()
+    // tools.ReadFile()
     tools.ParamTest()
 }
