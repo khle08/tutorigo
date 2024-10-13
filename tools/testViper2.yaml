@@ -1,0 +1,28 @@
+cors:
+    credentials: true
+    headers: '*'
+    maxage: 86400
+    methods: '*'
+    origin: http://localhost:8000
+
+datasource:
+    host: 127.0.0.1
+    type: mysql
+
+key:
+    activate: Code
+    auth: Authorization gg
+    email: Email
+    user: UserId
+
+pay:
+    platform: h5zhifu
+
+server:
+    port: 8000
+
+web:
+    asset: assets
+    template: templates
+
+

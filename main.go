@@ -12,7 +12,7 @@ import (
     "fmt"
     "tutorigo/funcs"
     "tutorigo/tools"
-    "tutorigo/basics"
+    // "tutorigo/basics"
     "tutorigo/template"
     "tutorigo/packageName"
 )
@@ -44,16 +44,16 @@ func main() {
     // In order to call function defined in another package organized in ...
     // ... other folder, 1) import the package 2) call it here.
     packageName.Print()
-    packageName.Print2(123)
-    packageName.Print2("this is a string")
-    fmt.Printf("note version: %v\n", basics.VERSION)
+    // packageName.Print2(123)
+    // packageName.Print2("this is a string")
+    // fmt.Printf("note version: %v\n", basics.VERSION)
 
-    fmt.Printf("var L: %v\n", template.L)
+    // fmt.Printf("var L: %v\n", template.L)
     intStack := template.Stack[int]{}
     intStack.Push(1)
-    intStack.Push(2)
-    fmt.Println(intStack.Items)
-    fmt.Println(intStack.GetItems())
+    // intStack.Push(2)
+    // fmt.Println(intStack.Items)
+    // fmt.Println(intStack.GetItems())
 
     // basics.Variable()
     // basics.Constant()
@@ -87,6 +87,7 @@ func main() {
     // // funcs.Goroutine()
     // funcs.Channel()
     
-    tools.ReadFile()
-    tools.ParamTest()
+    // tools.ReadFile()
+    // tools.ParamTest()
+    tools.SaveViper()
 }

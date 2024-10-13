@@ -1,0 +1,29 @@
+# this is a notation
+
+server:
+    port: 8000  # ssss
+
+datasource:
+    type: mysql
+    host: 127.0.0.1
+
+key:
+    auth: Authorization gg
+    user: UserId
+    email: Email
+    activate: Code
+
+cors:
+    origin: http://localhost:8000
+    maxage: 86400
+    methods: "*"
+    headers: "*"
+    credentials: true
+
+pay:
+    platform: h5zhifu
+
+web:
+    asset: assets
+    template: templates
+
