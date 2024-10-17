@@ -90,5 +90,6 @@ func main() {
     // tools.ReadFile()
     // tools.ParamTest()
     // tools.SaveViper()
-    tools.OpenCV()
+    // tools.OpenCV()
+    tools.TestIP()
 }
