@@ -5,6 +5,10 @@ package tools
 import (
     "fmt"
     "net"
+
+    "regexp"
+    "strings"
+    "os/exec"
 )
 
 ////////////////////////////////////////////////////////////////////////
@@ -47,6 +51,39 @@ func GetLocalIP() (string, error) {
 }
 
 
+func GetWifiList(system string) ([][]string, error) {
+    var wifiList [][]string
+
+    cmd := exec.Command("./tools/scripts/wifi.sh", "list")
+    out, err := cmd.CombinedOutput()
+    if err != nil {
+        return wifiList, err
+    }
+
+    output := string(out)
+    lines := strings.Split(output, "\n")
+
+    for idx, line := range lines {
+        if idx == 0 {
+            continue
+        }
+
+        // Remove the space at beginning and end points
+        line = strings.TrimSpace(line)
+        // Split only those 2 or more spaces
+        re := regexp.MustCompile(`\s{2,}`)
+        elements := re.Split(line, -1)
+        // elements := strings.Fields(line)
+
+        if len(elements) > 6 {
+            wifiList = append(wifiList, elements)            
+        }
+    }
+
+    return wifiList, nil
+}
+
+
 func TestIP() {
     ip, err := GetLocalIP()
     if err != nil {
@@ -54,5 +91,16 @@ func TestIP() {
     } else {
         fmt.Println("Local IP: ", ip)
     }
+
+
+    wifiList, err := GetWifiList("linux")
+    if err != nil {
+        fmt.Printf("Failed to list wifi networks: %v", err)
+    }
+    fmt.Println(wifiList)
+
+    // for _, elements := range wifiList {
+    //     fmt.Println(len(elements))
+    // }
 }
 
