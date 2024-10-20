@@ -3,104 +3,119 @@
 package tools
 
 import (
-    "fmt"
-    "net"
-
-    "regexp"
-    "strings"
-    "os/exec"
+    // "github.com/gin-gonic/gin"
+    // "github.com/gorilla/websocket"
+    // "log"
+    // "net/http"
+    // "sync"
 )
 
 ////////////////////////////////////////////////////////////////////////
 
 
-func GetLocalIP() (string, error) {
-    // Get a list of all network interfaces on the system
-    interfaces, err := net.Interfaces()
-    if err != nil {
-        return "", err
-    }
+// // Room represents a chat room
+// type Room struct {
+//     clients   []*websocket.Conn // Directly use *websocket.Conn
+//     broadcast chan []byte
+//     mu        sync.RWMutex
+// }
 
-    // Iterate through the network interfaces
-    for _, iface := range interfaces {
-        // Skip loopback interfaces and those that are down
-        if iface.Flags&net.FlagUp == 0 || iface.Flags&net.FlagLoopback != 0 {
-            continue
-        }
+// var rooms = make(map[string]*Room)
+// var upgrader = websocket.Upgrader{
+//     CheckOrigin: func(r *http.Request) bool {
+//         return true // Allow connections from any origin
+//     },
+// }
 
-        // Get a list of all addresses assigned to the interface
-        addrs, err := iface.Addrs()
-        if err != nil {
-            return "", err
-        }
+// func main() {
+//     router := gin.Default()
+//     router.GET("/ws/:room", handleWebSocket)
 
-        // Iterate through the addresses
-        for _, addr := range addrs {
-            ipNet, ok := addr.(*net.IPNet)
-            if !ok || ipNet.IP.IsLoopback() {
-                continue
-            }
+//     if err := router.Run(":8080"); err != nil {
+//         log.Fatalf("Server failed to start: %v", err)
+//     }
+// }
 
-            if ipNet.IP.To4() != nil {
-                return ipNet.IP.String(), nil
-            }
-        }
-    }
+// // handleWebSocket handles incoming WebSocket connections for a specific room
+// func handleWebSocket(c *gin.Context) {
+//     roomName := c.Param("room")
+//     conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+//     if err != nil {
+//         log.Printf("Failed to upgrade connection: %v", err)
+//         return
+//     }
+//     defer conn.Close()
 
-    return "", fmt.Errorf("Unable to find local IP address")
-}
+//     room := joinRoom(roomName, conn)
+//     log.Printf("Client joined room: %s", roomName)
 
+//     // Handle client messages
+//     for {
+//         _, msg, err := conn.ReadMessage()
+//         if err != nil {
+//             log.Printf("Client in room %s disconnected: %v", roomName, err)
+//             break
+//         }
+//         log.Printf("Message from room %s: %s", roomName, msg)
 
-func GetWifiList(system string) ([][]string, error) {
-    var wifiList [][]string
+//         // Broadcast message to the room
+//         room.broadcast <- msg
+//     }
 
-    cmd := exec.Command("./tools/scripts/wifi.sh", "list")
-    out, err := cmd.CombinedOutput()
-    if err != nil {
-        return wifiList, err
-    }
+//     // Leave the room
+//     leaveRoom(room, conn)
+// }
 
-    output := string(out)
-    lines := strings.Split(output, "\n")
+// // joinRoom adds a WebSocket connection to the specified room, creating the room if necessary
+// func joinRoom(roomName string, conn *websocket.Conn) *Room {
+//     room := getRoom(roomName)
 
-    for idx, line := range lines {
-        if idx == 0 {
-            continue
-        }
+//     room.mu.Lock()
+//     defer room.mu.Unlock()
+//     room.clients = append(room.clients, conn)
+//     return room
+// }
 
-        // Remove the space at beginning and end points
-        line = strings.TrimSpace(line)
-        // Split only those 2 or more spaces
-        re := regexp.MustCompile(`\s{2,}`)
-        elements := re.Split(line, -1)
-        // elements := strings.Fields(line)
+// // leaveRoom removes a WebSocket connection from the room
+// func leaveRoom(room *Room, conn *websocket.Conn) {
+//     room.mu.Lock()
+//     defer room.mu.Unlock()
 
-        if len(elements) > 6 {
-            wifiList = append(wifiList, elements)            
-        }
-    }
+//     for i, c := range room.clients {
+//         if c == conn {
+//             room.clients = append(room.clients[:i], room.clients[i+1:]...)
+//             break
+//         }
+//     }
+// }
 
-    return wifiList, nil
-}
+// // getRoom retrieves or creates a room
+// func getRoom(name string) *Room {
+//     if room, exists := rooms[name]; exists {
+//         return room
+//     }
 
+//     room := &Room{
+//         clients:   []*websocket.Conn{},
+//         broadcast: make(chan []byte),
+//     }
+//     rooms[name] = room
 
-func TestIP() {
-    ip, err := GetLocalIP()
-    if err != nil {
-        fmt.Println("err: ", err)
-    } else {
-        fmt.Println("Local IP: ", ip)
-    }
+//     go handleMessages(room)
+//     return room
+// }
 
-
-    wifiList, err := GetWifiList("linux")
-    if err != nil {
-        fmt.Printf("Failed to list wifi networks: %v", err)
-    }
-    fmt.Println(wifiList)
-
-    // for _, elements := range wifiList {
-    //     fmt.Println(len(elements))
-    // }
-}
+// // handleMessages listens for messages in a room and broadcasts them to all clients
+// func handleMessages(room *Room) {
+//     for msg := range room.broadcast {
+//         room.mu.RLock()
+//         for _, conn := range room.clients {
+//             if err := conn.WriteMessage(websocket.TextMessage, msg); err != nil {
+//                 log.Printf("Error sending message to client: %v", err)
+//                 conn.Close()
+//             }
+//         }
+//         room.mu.RUnlock()
+//     }
+// }
 
